@@ -13,8 +13,8 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 - Implementación de herramientas de monitoreo esenciales
 
 ---
-#Instrucciones
-##Creación de la Imagen Docker: 
+# Instrucciones
+## Creación de la Imagen Docker: 
 
 -Redacta un archivo Dockerfile que construya una imagen Docker con Nagios Core. 
 -La imagen debe incluir todas las dependencias necesarias para que Nagios funcione correctamente. 
@@ -24,7 +24,7 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 -Sube el código del Dockerfile y otros archivos que requieras para construir la imagen a un repositorio GitHub. 
 -Crea un archivo README.md en el repositorio que explique detalladamente los pasos para construir la imagen y ejecutar el contenedor. 
 
-##Despliegue en AWS ECS: 
+## Despliegue en AWS ECS: 
 
 -Sube la imagen Docker creada a un repositorio de Elastic Container Registry (ECR). 
 -Crea un sistema de archivos EFS y configúralo para que sea accesible desde ECS. 
@@ -36,6 +36,71 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 -Confirma que los datos de Nagios se almacenan persistentemente en el EFS. 
 
 
+# Desarrollo
+
+## Estructura del proyecto
+.
+├── Dockerfile
+├── README.md
+└── ...
+
+
+
+## Creación de la Imagen Docker: 
+
+## Se utilizo una imagen bae Ubuntu 22.04
+```bash
+FROM ubuntu:22.04
+```bash
+
+## dependencias utilizadas
+```bash
+apt-get update && \
+    apt-get install --no-install-recommends -y \
+    ca-certificates \
+    autoconf \
+    gcc \
+    make \
+    unzip \
+    wget \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    libgd-dev \
+    libssl-dev \
+    daemon \
+    libperl-dev \
+    libnet-snmp-perl \
+    libmysqlclient-dev \
+    curl && \
+    update-ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+```bash
+
+## Se agregan los usuarios y permisos
+```bash
+seradd nagios && \
+    groupadd nagcmd && \
+    usermod -a -G nagcmd nagios && \
+    usermod -a -G nagcmd www-data
+```bash
+
+## descarg y compila Nagios
+```bash
+
+wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz && \
+    tar -xzf nagios-4.5.9.tar.gz && \
+    cd nagios-4.5.9 && \
+    ./configure --with-command-group=nagcmd && \
+    make all && \
+    make install && \
+    make install-commandmode && \
+    make install-init && \
+    make install-config && \
+    make install-webconf && \
+    htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin nagios && \
+    cd .. && rm -rf nagios-4.5.9*
+```bash
 
 
 ##  Clonar el repositorio
@@ -43,17 +108,27 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
+```bash
+## Construir Imagen
+```bash
 
-# Construir Imagen
 docker build -t nagios .
-
+```bash
 ## Ejecutar Contenedor
+```bash
 docker run -d --name nagios-container -p 80:80 nagios
+```bash
 
-## Estructura del proyecto
-.
-├── Dockerfile
-├── README.md
-└── ...
+## Exponer puerto 
+```bash
+EXPOSE 80
+```bash
+
+# Usuario de conexion
+
+```bash
+user: nagiosadmin
+password: nagios
+```bash
 
 

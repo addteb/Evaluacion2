@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
 
-# Instala dependencias del sistema incluyendo certificados raíz actualizados
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     ca-certificates \
@@ -26,13 +26,12 @@ RUN apt-get update && \
     update-ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# Crea usuario y grupos necesarios
 RUN useradd nagios && \
     groupadd nagcmd && \
     usermod -a -G nagcmd nagios && \
     usermod -a -G nagcmd www-data
 
-# Descarga y compila Nagios Core 4.5.9
+
 RUN wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz && \
     tar -xzf nagios-4.5.9.tar.gz && \
     cd nagios-4.5.9 && \
@@ -46,12 +45,12 @@ RUN wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.ta
     htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin nagios && \
     cd .. && rm -rf nagios-4.5.9*
 
-# Habilita módulos de Apache
+
 RUN a2enmod rewrite cgi
 
-# Expone el puerto del panel web de Nagios
+
 EXPOSE 80
 
-# Comando para iniciar Nagios y Apache en el contenedor
+
 CMD ["sh", "-c", "service apache2 start && /usr/local/nagios/bin/nagios /usr/local/nagios/etc/nagios.cfg && tail -f /dev/null"]
 
