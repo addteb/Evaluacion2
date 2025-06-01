@@ -2,58 +2,53 @@
 
 Este proyecto tiene como objetivo medir la capacidad para:
 
-- Crear imágenes Docker
-- Desplegar aplicaciones en AWS ECS
-- Configurar servicios de monitoreo con Nagios
++ Crear imágenes Docker
++ Desplegar aplicaciones en AWS ECS
++ Configurar servicios de monitoreo con Nagios
 
 A través de esta actividad práctica, demostrarás tus habilidades en:
 
-- Gestión de contenedores
-- Administración de infraestructura en la nube
-- Implementación de herramientas de monitoreo esenciales
++ Gestión de contenedores
++ Administración de infraestructura en la nube
++ Implementación de herramientas de monitoreo esenciales
 
 ---
 # Instrucciones
 ## Creación de la Imagen Docker: 
 
--Redacta un archivo Dockerfile que construya una imagen Docker con Nagios Core. 
--La imagen debe incluir todas las dependencias necesarias para que Nagios funcione correctamente. 
--Configura Nagios para que inicie automáticamente al arrancar el contenedor. 
--Considera exponer el puerto 80 para acceder a la interfaz web de Nagios. 
--Construye la imagen y verifica que Nagios sea accesible localmente. 
--Sube el código del Dockerfile y otros archivos que requieras para construir la imagen a un repositorio GitHub. 
--Crea un archivo README.md en el repositorio que explique detalladamente los pasos para construir la imagen y ejecutar el contenedor. 
++ Redacta un archivo Dockerfile que construya una imagen Docker con Nagios Core. 
++ La imagen debe incluir todas las dependencias necesarias para que Nagios funcione correctamente. 
++ Configura Nagios para que inicie automáticamente al arrancar el contenedor. 
++ Considera exponer el puerto 80 para acceder a la interfaz web de Nagios. 
++ Construye la imagen y verifica que Nagios sea accesible localmente. 
++ Sube el código del Dockerfile y otros archivos que requieras para construir la imagen a un repositorio GitHub. 
++ Crea un archivo README.md en el repositorio que explique detalladamente los pasos para construir la imagen y ejecutar el contenedor. 
 
 ## Despliegue en AWS ECS: 
 
--Sube la imagen Docker creada a un repositorio de Elastic Container Registry (ECR). 
--Crea un sistema de archivos EFS y configúralo para que sea accesible desde ECS. 
--Define una tarea en ECS que utilice la imagen de Nagios del ECR. 
--Configura el montaje del EFS en el directorio principal de Nagios en cada contenedor. 
--Crea un servicio ECS con 3 tareas deseadas. 
--Configura un Application Load Balancer (ALB) para distribuir el tráfico entre las tareas. 
--Verifica que Nagios sea accesible a través de la URL del ALB. 
--Confirma que los datos de Nagios se almacenan persistentemente en el EFS. 
++ Sube la imagen Docker creada a un repositorio de Elastic Container Registry (ECR). 
++ Crea un sistema de archivos EFS y configúralo para que sea accesible desde ECS. 
++ Define una tarea en ECS que utilice la imagen de Nagios del ECR. 
++ Configura el montaje del EFS en el directorio principal de Nagios en cada contenedor. 
++ Crea un servicio ECS con 3 tareas deseadas. 
++ Configura un Application Load Balancer (ALB) para distribuir el tráfico entre las tareas. 
++ Verifica que Nagios sea accesible a través de la URL del ALB. 
++ Confirma que los datos de Nagios se almacenan persistentemente en el EFS. 
 
-
+---
 # Desarrollo
-
-## Estructura del proyecto
-.
-├── Dockerfile
-├── README.md
-└── ...
-
 
 
 ## Creación de la Imagen Docker: 
 
-## Se utilizo una imagen bae Ubuntu 22.04
+### Se utilizo una imagen bae Ubuntu 22.04
+
 ```bash
 FROM ubuntu:22.04
 ```bash
 
-## dependencias utilizadas
+### Dependencias utilizadas
+
 ```bash
 apt-get update && \
     apt-get install --no-install-recommends -y \
@@ -77,7 +72,8 @@ apt-get update && \
     rm -rf /var/lib/apt/lists/*
 ```bash
 
-## Se agregan los usuarios y permisos
+ ### Se agregan los usuarios y permisos
+
 ```bash
 seradd nagios && \
     groupadd nagcmd && \
@@ -85,7 +81,8 @@ seradd nagios && \
     usermod -a -G nagcmd www-data
 ```bash
 
-## descarg y compila Nagios
+### descarga y compila Nagios
+ 
 ```bash
 
 wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz && \
@@ -101,9 +98,10 @@ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz
     htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin nagios && \
     cd .. && rm -rf nagios-4.5.9*
 ```bash
-
-
+---
+## Para Ejecutar el Dockerfile
 ##  Clonar el repositorio
+
 
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
