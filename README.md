@@ -24,16 +24,6 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 + Sube el código del Dockerfile y otros archivos que requieras para construir la imagen a un repositorio GitHub. [x]
 + Crea un archivo README.md en el repositorio que explique detalladamente los pasos para construir la imagen y ejecutar el contenedor. [x]
 
-## Despliegue en AWS ECS: 
-
-+ Sube la imagen Docker creada a un repositorio de Elastic Container Registry (ECR).  [x]
-+ Crea un sistema de archivos EFS y configúralo para que sea accesible desde ECS. [x]
-+ Define una tarea en ECS que utilice la imagen de Nagios del ECR. [x]
-+ Configura el montaje del EFS en el directorio principal de Nagios en cada contenedor. [-]
-+ Crea un servicio ECS con 3 tareas deseadas. [x]
-+ Configura un Application Load Balancer (ALB) para distribuir el tráfico entre las tareas. [x]
-+ Verifica que Nagios sea accesible a través de la URL del ALB. [x]
-+ Confirma que los datos de Nagios se almacenan persistentemente en el EFS. 
 
 ---
 # Desarrollo
@@ -129,7 +119,7 @@ cd tu-repositorio
 ```
 
 ### Construir Imagen
-Estando en la ubicacion del archivo Dockerfile ejecutar:
+Estando en la ubicacion del archivo Dockerfile a ejecutar
 ```bash
 
 docker build -t nagios .
@@ -151,5 +141,34 @@ EXPOSE 80
 user: nagiosadmin
 password: nagios
 ```
+---
+
+## Despliegue en AWS ECS: 
+
++ Sube la imagen Docker creada a un repositorio de Elastic Container Registry (ECR).  [x]
++ Crea un sistema de archivos EFS y configúralo para que sea accesible desde ECS. [x]
++ Define una tarea en ECS que utilice la imagen de Nagios del ECR. [x]
++ Configura el montaje del EFS en el directorio principal de Nagios en cada contenedor. [-]
++ Crea un servicio ECS con 3 tareas deseadas. [x]
++ Configura un Application Load Balancer (ALB) para distribuir el tráfico entre las tareas. [x]
++ Verifica que Nagios sea accesible a través de la URL del ALB. [x]
++ Confirma que los datos de Nagios se almacenan persistentemente en el EFS. [-]
+
+
+Para el Despliege en AWS se realizo lo siguiente en el orden que indico
+
++ Creación de repositorio en ECR
++ Creación de SG 
++ Creación de Volumen EFS
++ Creación de permisos
++ Creación de Cluster ECS
++ Creación de tareas en ECS
++ Creación de Servicios en ECR
++ Se realiza Despliegue de contenedores
++ Creación de Balanceador de Carga
++ Configuración de SG para Balanceador de Carga y NFS
++ Pruebas finales.
+
+
 
 
