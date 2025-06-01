@@ -99,32 +99,53 @@ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz
     cd .. && rm -rf nagios-4.5.9*
 ```
 ---
-## Para Ejecutar el Dockerfile
-##  Clonar el repositorio
+# Creación de imagen
+para Crear imagen estando en el directorio utilice el siguiente comando para crear la imagen
+```bash
+ docker build -t duoc/epizarro . docker build -t duoc/epizarro .
+```
+## Envio a AWS ECR
+
+Antes de enviar la imagen a AWS realice el siguiente tag
+```bash
+docker tag duoc/epizarro:latest 433474845020.dkr.ecr.us-east-1.amazonaws.com/duoc/epizarro:latest
+```
+### Hago el envío a AWS ECR
+```bash
+docker push 433474845020.dkr.ecr.us-east-1.amazonaws.com/duoc/epizarro:latest
+```
+
+
+
+## Construir la imagen local
+Para construir la Imagen de manera local seguir lo siguiente
+
+###  Clonar el repositorio
 
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
+git clone https://github.com/addteb/Evaluacion2.git
 cd tu-repositorio 
 ```
 
-## Construir Imagen
+### Construir Imagen
+Estando en la ubicacion del archivo Dockerfile ejecutar:
 ```bash
 
 docker build -t nagios .
 ```
 
-## Ejecutar Contenedor
+### Ejecutar Contenedor
 ```bash
 docker run -d --name nagios-container -p 80:80 nagios
 ```
 
-## Exponer puerto 
+### Exponer puerto 
 ```bash
 EXPOSE 80
 ```
 
-# Usuario de conexion
+### Usuario de conexion
 
 ```bash
 user: nagiosadmin
