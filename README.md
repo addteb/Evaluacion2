@@ -45,7 +45,7 @@ A través de esta actividad práctica, demostrarás tus habilidades en:
 
 ```bash
 FROM ubuntu:22.04
-```bash
+```
 
 ### Dependencias utilizadas
 
@@ -70,7 +70,7 @@ apt-get update && \
     curl && \
     update-ca-certificates && \
     rm -rf /var/lib/apt/lists/*
-```bash
+```
 
  ### Se agregan los usuarios y permisos
 
@@ -79,7 +79,7 @@ seradd nagios && \
     groupadd nagcmd && \
     usermod -a -G nagcmd nagios && \
     usermod -a -G nagcmd www-data
-```bash
+```
 
 ### descarga y compila Nagios
  
@@ -97,7 +97,7 @@ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz
     make install-webconf && \
     htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin nagios && \
     cd .. && rm -rf nagios-4.5.9*
-```bash
+```
 ---
 ## Para Ejecutar el Dockerfile
 ##  Clonar el repositorio
