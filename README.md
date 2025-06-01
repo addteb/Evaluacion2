@@ -105,28 +105,30 @@ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz
 
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
-```bash
+cd tu-repositorio 
+```
+
 ## Construir Imagen
 ```bash
 
 docker build -t nagios .
-```bash
+```
+
 ## Ejecutar Contenedor
 ```bash
 docker run -d --name nagios-container -p 80:80 nagios
-```bash
+```
 
 ## Exponer puerto 
 ```bash
 EXPOSE 80
-```bash
+```
 
 # Usuario de conexion
 
 ```bash
 user: nagiosadmin
 password: nagios
-```bash
+```
 
 
