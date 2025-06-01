@@ -88,6 +88,12 @@ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.9.tar.gz
     htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin nagios && \
     cd .. && rm -rf nagios-4.5.9*
 ```
+
+### Exponer puerto del contenedor
+```bash
+EXPOSE 80
+```
+
 ---
 # Creación de imagen
 para Crear imagen estando en el directorio utilice el siguiente comando para crear la imagen
@@ -130,10 +136,12 @@ docker build -t nagios .
 docker run -d --name nagios-container -p 80:80 nagios
 ```
 
-### Exponer puerto 
-```bash
-EXPOSE 80
-```
+### Conectarse al Docker
+
+Según se la configuracion se debe acceder al servicio
+
+http://iphostOdelcontenedor/nagios
+
 
 ### Usuario de conexion
 
